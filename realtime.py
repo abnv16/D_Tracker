@@ -1,7 +1,3 @@
-#Before runnig this file make sure you have Pretrained model and classes folder
-#you can get all thing via my github link i will mention below
-#It will depend on CPU performance if your cpu performance is good the video will process fast
-#i have not good cpu performacnce to that why its processing quite low
 import cv2
 import datetime
 import imutils
@@ -9,12 +5,11 @@ import numpy as np
 from centroidtracker import CentroidTracker
 from itertools import combinations
 import math
-#THE model and prototype files are here
+
 protopath = "MobileNetSSD_deploy.prototxt"
 modelpath = "MobileNetSSD_deploy.caffemodel"
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 
-#mention num of classes here
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
            "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
@@ -62,7 +57,6 @@ def non_max_suppression_fast(boxes, overlapThresh):
         return boxes[pick].astype("int")
     except Exception as e:
         print("Exception occurred in non_max_suppression : {}".format(e))
-#Pass the video link here
 
 def main():
     cap = cv2.VideoCapture(0)
@@ -110,10 +104,7 @@ def main():
             cY = int((y1 + y2) / 2.0)
 
 
-            centroid_dict[objectId] = (cX, cY, x1, y1, x2, y2)
-
-            # text = "ID: {}".format(objectId)
-            # cv2.putText(frame, text, (x1, y1-5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
+            centroid_dict[objectId] = (cX, cY, x1, y1, x2, y2)         
 
         red_zone_list = []
         for (id1, p1), (id2, p2) in combinations(centroid_dict.items(), 2):
